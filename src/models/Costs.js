@@ -11,7 +11,8 @@ const costSchema = new mongoose.Schema(
 		year: { type: Number, required: true },
 		month: { type: Number, required: true, min: 1, max: 12 },
 		day: { type: Number, required: true, min: 1, max: 31 },
-		id: { type: Number, required: true, unique: true }, // Auto-generated, unique
+		// Auto-generated, unique
+		id: { type: Number, required: true, unique: true },
 		description: { type: String, required: true },
 		category: {
 			type: String,

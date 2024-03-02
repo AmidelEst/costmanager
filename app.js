@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const userRoutes = require('./src/routes/UsersRouter');
 
 app.get('/', (req, res) => {
 	res.status(200)
@@ -45,7 +46,7 @@ app.use((req, res, next) => {
 //------
 
 // Routes
-
+app.use('/', userRoutes);
 //-------
 
 // end middleware
