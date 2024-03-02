@@ -32,4 +32,4 @@ const costSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Cost = mongoose.model('Cost', costSchema);
+module.exports = mongoose.model('Cost', costSchema);
