@@ -1,8 +1,9 @@
 const moment = require('moment');
-const Cost = require('../models/Costs');
-const Developer = require('../models/Developer');
-const User = require('../models/Users');
+const Cost = require('../models/costs');
+const User = require('../models/users');
+const Developer = require('../models/developers');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 module.exports = {
 	// 1. POST: input parameters(7): user_id, year, month, day, description, category, and sum
@@ -40,7 +41,7 @@ module.exports = {
 		});
 	},
 
-	//3. GET
+	//3. GET: NO INPUTS
 	about: (req, res) => {
 		Developer.find()
 			.then((developers) => {

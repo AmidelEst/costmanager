@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
-require('dotenv').config();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const userRoutes = require('./src/routes/UsersRouter');
+const apiRoutes = require('./src/routes/apiRoutes');
+const port = 3000;
 
 app.get('/', (req, res) => {
 	res.status(200)
@@ -14,11 +14,10 @@ app.get('/', (req, res) => {
 });
 
 // Db
-mongoose.connect(process.env.MONGO_URI);
-mongoose.connection.on('connected', () => {
-	console.log('MongoDB connected');
-});
+mongoose.connect('mongodb://127.0.0.1:27017/Cost_Manager');
+mongoose.Promise = global.Promise;
 //------
+
 // middelware
 app.use(morgan('dev'));
 //app.use('/uploads', express.static('uploads'));
@@ -46,7 +45,7 @@ app.use((req, res, next) => {
 //------
 
 // Routes
-app.use('/', userRoutes);
+app.use('/', apiRoutes);
 //-------
 
 // end middleware
@@ -63,6 +62,9 @@ app.use((error, req, res, next) => {
 		},
 	});
 });
-
 //-----
-module.exports = app;
+
+// run server 
+app.listen(port, () => {
+	console.log(`app listening on port ${port}`);
+});
