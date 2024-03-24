@@ -7,51 +7,75 @@ mongoose.Promise = global.Promise;
 
 module.exports = {
 	// 1. POST: input parameters(7): user_id, year, month, day, description, category, and sum
-	addcost: (req, res) => {
-		const { user_id, year, month, day, description, category, sum } =
-			req.body;
-		const cost = new Cost({
-			user_id,
-			year,
-			month,
-			day,
-			description,
-			category,
-			sum,
-		});
-
-		cost.save()
-			.then(() => {
+	addcost: async (req, res) => {
+		try {
+			const { user_id, year, month, day, description, category, sum } =
+				req.body;
+			const cost = new Cost({
+				user_id,
+				year,
+				month,
+				day,
+				description,
+				category,
+				sum,
+			});
+			cost.save().then(() => {
 				res.status(200).json({
 					message: 'success',
 				});
-			})
-			.catch((error) => {
-				res.status(500).json({
-					message: error,
-				});
 			});
+		} catch (error) {
+			// Handle potential errors
+			res.status(500).json({ message: 'Error adding cost', error });
+		}
 	},
 
 	// 2. GET: input parameters(3): user_id, month, year
-	report: (req, res) => {
+	report: async (req, res) => {
 		const { user_id, month, year } = req.params;
-		res.status(200).json({
-			message: 'report',
-		});
+
+		try {
+			// Query the database for costs related to the user, month, and year
+			const costs = await Cost.find({
+				user_id: user_id,
+				month: parseInt(month, 10),
+				year: parseInt(year, 10),
+			});
+			// Initialize an object with all categories set to empty arrays
+
+			const report = {
+				food: [],
+				health: [],
+				housing: [],
+				sport: [],
+				education: [],
+				transportation: [],
+				other: [],
+			};
+			// Populate the report object with the queried costs
+			costs.forEach((cost) => {
+				const { day, description, sum, category } = cost;
+				report[category].push({ day, description, sum });
+			});
+			// Send the structured report as a response
+			res.status(200).json(report);
+		} catch (error) {
+			// Handle potential errors
+			res.status(500).json({ message: 'Error generating report', error });
+		}
 	},
 
 	//3. GET: NO INPUTS
-	about: (req, res) => {
-		Developer.find()
-			.then((developers) => {
+	about: async (req, res) => {
+		try {
+			Developer.find().then((developers) => {
 				res.status(200).json({ developers });
-			})
-			.catch((error) => {
-				res.status(500).json({
-					message: error.message,
-				});
 			});
+		} catch (error) {
+			// Handle potential errors
+			res.status(500).json({ message: 'Error on about', error });
+		}
 	},
 	//-------------added methods--------------------------
 
