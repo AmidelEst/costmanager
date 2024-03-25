@@ -103,9 +103,10 @@ module.exports = {
 	//3. about: GET: NO INPUTS
 	about: async (req, res) => {
 		try {
-			Developer.find().then((developers) => {
-				res.status(200).json({ developers });
-			});
+			res.status(200).json(
+				{ "firstname": "Amit", "lastname": "Pompas", "id": "315072397", "email": "amitpom14@gmail.com" },
+				{ "firstname": "Orel", "lastname": "Israel", "id": "314916974", "email": "OrelIsrael98@gmail.com" });
+
 		} catch (error) {
 			// Handle potential errors
 			res.status(500).json({ message: 'Error on about', error });
@@ -145,26 +146,4 @@ module.exports = {
 			});
 	},
 
-	//-- added method 2: add developer
-	adddeveloper: (req, res) => {
-		const { firstname, lastname, id, email } = req.body;
-		const cost = new Developer({
-			firstname,
-			lastname,
-			id,
-			email,
-		});
-
-		cost.save()
-			.then(() => {
-				res.status(200).json({
-					message: 'success',
-				});
-			})
-			.catch((error) => {
-				res.status(500).json({
-					message: error,
-				});
-			});
-	},
 };
