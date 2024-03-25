@@ -1,7 +1,6 @@
 const moment = require('moment');
 const Cost = require('../models/costs');
 const User = require('../models/users');
-const Developer = require('../models/developers');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
