@@ -1,0 +1,37 @@
+https://cost-manager-wpw0.onrender.com
+
+testing getting the about
+-------------------------
+url=https://cost-manager-wpw0.onrender.com/about/
+data.status_code=200
+b'[{"firstname":"Amit","lastname":"Pompas","id":"315072397","email":"amitpom14@gmail.com"},{"firstname":"Orel","lastname":"Israel","id":"314916974","email":"OrelIsrael98@gmail.com"}]'
+data.text=[{"firstname":"Amit","lastname":"Pompas","id":"315072397","email":"amitpom14@gmail.com"},{"firstname":"Orel","lastname":"Israel","id":"314916974","email":"OrelIsrael98@gmail.com"}]
+[{'firstname': 'Amit', 'lastname': 'Pompas', 'id': '315072397', 'email': 'amitpom14@gmail.com'}, {'firstname': 'Orel', 'lastname': 'Israel', 'id': '314916974', 'email': 'OrelIsrael98@gmail.com'}]
+firstname=Amit
+lastname=Pompas
+id=315072397
+Amit Pompas 315072397
+
+testing getting the report - 1
+------------------------------
+url=https://cost-manager-wpw0.onrender.com/report/?user_id=123123&year=2023&month=3
+data.status_code=200
+b'{"food":[],"health":[],"housing":[],"sport":[],"education":[],"transportation":[],"other":[]}'
+data.text={"food":[],"health":[],"housing":[],"sport":[],"education":[],"transportation":[],"other":[]}
+[]
+
+testing adding cost
+-------------------
+url=https://cost-manager-wpw0.onrender.com/addcost/
+data.status_code=200
+b'{"message":"success","id":"6601a7fa67c2c526103c346a"}'
+data.text={"message":"success","id":"6601a7fa67c2c526103c346a"}
+id of the added cost item is 6601a7fa67c2c526103c346a
+
+testing getting the report - 1
+------------------------------
+url=https://cost-manager-wpw0.onrender.com/report/?user_id=123123&year=2024&month=4
+data.status_code=200
+b'{"food":[{"day":2,"description":"milk 9","sum":8},{"day":2,"description":"milk 9","sum":8},{"day":2,"description":"milk 9","sum":8},{"day":2,"description":"milk 9","sum":8}],"health":[],"housing":[],"sport":[],"education":[],"transportation":[],"other":[]}'
+data.text={"food":[{"day":2,"description":"milk 9","sum":8},{"day":2,"description":"milk 9","sum":8},{"day":2,"description":"milk 9","sum":8},{"day":2,"description":"milk 9","sum":8}],"health":[],"housing":[],"sport":[],"education":[],"transportation":[],"other":[]}
+[{'day': 2, 'description': 'milk 9', 'sum': 8}, {'day': 2, 'description': 'milk 9', 'sum': 8}, {'day': 2, 'description': 'milk 9', 'sum': 8}, {'day': 2, 'description': 'milk 9', 'sum': 8}]
