@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const apiRoutes = require('./src/routes/apiRoutes');
+const apiRoutes = require('./src/routes/apiroutes');
 const port = 3000;
 
 app.get('/', (req, res) => {
@@ -64,7 +64,7 @@ app.use((error, req, res, next) => {
 });
 //-----
 
-// run server 
+// run server
 app.listen(port, () => {
 	console.log(`app listening on port ${port}`);
 });

@@ -7,7 +7,7 @@ const {
 	about,
 	adddeveloper,
 	adduser,
-} = require('../controllers/apiController');
+} = require('../controllers/apicontroller');
 
 // 1. POST = passing params in request body. input parameters(7): user_id, year, month, day, description, category, and sum
 router.post('/addcost', addcost);
