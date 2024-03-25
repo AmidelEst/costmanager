@@ -102,10 +102,20 @@ module.exports = {
 	//3. about: GET: NO INPUTS
 	about: async (req, res) => {
 		try {
-			res.status(200).json(
-				{ "firstname": "Amit", "lastname": "Pompas", "id": "315072397", "email": "amitpom14@gmail.com" },
-				{ "firstname": "Orel", "lastname": "Israel", "id": "314916974", "email": "OrelIsrael98@gmail.com" });
-
+			res.status(200).json([
+				{
+					firstname: 'Amit',
+					lastname: 'Pompas',
+					id: '315072397',
+					email: 'amitpom14@gmail.com',
+				},
+				{
+					firstname: 'Orel',
+					lastname: 'Israel',
+					id: '314916974',
+					email: 'OrelIsrael98@gmail.com',
+				},
+			]);
 		} catch (error) {
 			// Handle potential errors
 			res.status(500).json({ message: 'Error on about', error });
@@ -144,5 +154,4 @@ module.exports = {
 				});
 			});
 	},
-
 };
