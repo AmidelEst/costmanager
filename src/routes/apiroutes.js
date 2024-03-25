@@ -5,7 +5,6 @@ const {
 	addcost,
 	report,
 	about,
-	adddeveloper,
 	adduser,
 } = require('../controllers/apicontroller');
 
@@ -24,7 +23,5 @@ router.get('/about', about);
 //-- added method 1: add user
 router.post('/adduser', adduser);
 
-//-- added method 2: add developer
-router.post('/adddeveloper', adddeveloper);
 
 module.exports = router;
