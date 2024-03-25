@@ -71,12 +71,6 @@ module.exports = {
 
 			const report = await Cost.aggregate(pipeline);
 
-			if (report.length === 0) {
-				return res.status(200).json({
-					message:
-						'No costs found for the specified user, month, and year.',
-				});
-			}
 			// Initialize an object with all categories as keys and empty arrays as values
 			let formattedReport = {
 				food: [],
@@ -93,7 +87,6 @@ module.exports = {
 			});
 			res.status(200).json(formattedReport);
 		} catch (error) {
-			console.error('Error generating report:', error);
 			res.status(500).json({
 				message: 'Error generating report',
 				error: error.message,
