@@ -19,9 +19,11 @@ module.exports = {
 				category,
 				sum,
 			});
-			cost.save().then(() => {
+			// Save the cost and return the newly created cost object
+			cost.save().then((savedCost) => {
 				res.status(200).json({
 					message: 'success',
+					id: savedCost._id, // Return the 'id' of the newly created item
 				});
 			});
 		} catch (error) {
@@ -70,7 +72,7 @@ module.exports = {
 			const report = await Cost.aggregate(pipeline);
 
 			if (report.length === 0) {
-				return res.status(404).json({
+				return res.status(200).json({
 					message:
 						'No costs found for the specified user, month, and year.',
 				});
