@@ -47,17 +47,19 @@ module.exports = {
 				category,
 				sum,
 			});
+			console.log(user_id, year, month, day, description, category, sum);
 			// Saving the new Cost instance to the database
-			cost.save().then((savedCost) => {
-				// On success, return the ID of the newly created cost entry
-				res.status(200).json({
-					message: 'success',
-					id: savedCost._id,
-				});
+			await cost.save();
+			res.status(200).json({
+				message: 'success',
+				id: cost._id,
 			});
 		} catch (error) {
-			// On error, return a 500 status with the error message
-			res.status(500).json({ message: 'Error adding cost', error });
+			console.error('Error adding cost:', error);
+			res.status(500).json({
+				message: 'Error adding cost',
+				error: error.message,
+			});
 		}
 	},
 
