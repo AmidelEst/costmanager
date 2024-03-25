@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const costSchema = new mongoose.Schema(
+const CostSchema = new mongoose.Schema(
 	{
 		user_id: {
 			type: String,
@@ -11,7 +11,7 @@ const costSchema = new mongoose.Schema(
 		year: { type: Number, required: true },
 		month: { type: Number, required: true, min: 1, max: 12 },
 		day: { type: Number, required: true, min: 1, max: 31 },
-		id:{type:String},
+		id: { type: String },
 		description: { type: String, required: true },
 		category: {
 			type: String,
@@ -31,4 +31,4 @@ const costSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model('Cost', costSchema);
+module.exports = mongoose.model('Cost', CostSchema);

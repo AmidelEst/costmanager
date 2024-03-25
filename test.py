@@ -2,7 +2,7 @@ import requests
 import sys
 
 filename = input("filename=")
-line = "http://ec2-16-16-205-202.eu-north-1.compute.amazonaws.com:3000"
+line = "https://cost-manager-wpw0.onrender.com"
 output = open(filename,"w")
 sys.stdout = output
 print(line)
