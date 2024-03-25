@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const costSchema = new mongoose.Schema(
 	{
 		user_id: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: String,
 			// costs are related to users through user_id, indicating a one-to-many relationship (one user, many costs).
 			ref: 'User',
 			required: true,
@@ -11,8 +11,7 @@ const costSchema = new mongoose.Schema(
 		year: { type: Number, required: true },
 		month: { type: Number, required: true, min: 1, max: 12 },
 		day: { type: Number, required: true, min: 1, max: 31 },
-		// Auto-generated, unique
-		id: { type: Number, required: true, unique: true },
+		id:{type:String},
 		description: { type: String, required: true },
 		category: {
 			type: String,

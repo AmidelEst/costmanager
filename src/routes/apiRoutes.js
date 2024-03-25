@@ -13,7 +13,7 @@ const {
 router.post('/addcost', addcost);
 
 // 2. GET = passing params in request URL. input parameters(3): user_id, month, year
-router.get('/report/:user_id/:month/:year', report);
+router.get('/report', report);
 
 // 3. GET
 router.get('/about', about);

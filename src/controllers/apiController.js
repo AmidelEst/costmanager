@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 module.exports = {
-	// 1. POST: input parameters(7): user_id, year, month, day, description, category, and sum
+	// 1. addcost: POST: input parameters(7): user_id, year, month, day, description, category, and sum
 	addcost: async (req, res) => {
 		try {
 			const { user_id, year, month, day, description, category, sum } =
@@ -31,20 +31,53 @@ module.exports = {
 		}
 	},
 
-	// 2. GET: input parameters(3): user_id, month, year
+	// 2. report: GET: input  parameters(3): user_id, month, year
 	report: async (req, res) => {
-		const { user_id, month, year } = req.params;
-
+		const { user_id, month, year } = req.query;
+		// month and year are parsed as integers
+		const parsedMonth = parseInt(month, 10);
+		const parsedYear = parseInt(year, 10);
 		try {
-			// Query the database for costs related to the user, month, and year
-			const costs = await Cost.find({
-				user_id: user_id,
-				month: parseInt(month, 10),
-				year: parseInt(year, 10),
-			});
-			// Initialize an object with all categories set to empty arrays
+			// pipeline to be used inside Cost.aggregate
+			const pipeline = [
+				{
+					$match: {
+						user_id: user_id,
+						month: parsedMonth,
+						year: parsedYear,
+					},
+				},
+				{
+					$group: {
+						_id: '$category',
+						costs: {
+							$push: {
+								day: '$day',
+								description: '$description',
+								sum: '$sum',
+							},
+						},
+					},
+				},
+				{
+					$project: {
+						_id: 0,
+						category: '$_id',
+						costs: 1,
+					},
+				},
+			];
 
-			const report = {
+			const report = await Cost.aggregate(pipeline);
+
+			if (report.length === 0) {
+				return res.status(404).json({
+					message:
+						'No costs found for the specified user, month, and year.',
+				});
+			}
+			// Initialize an object with all categories as keys and empty arrays as values
+			let formattedReport = {
 				food: [],
 				health: [],
 				housing: [],
@@ -53,20 +86,21 @@ module.exports = {
 				transportation: [],
 				other: [],
 			};
-			// Populate the report object with the queried costs
-			costs.forEach((cost) => {
-				const { day, description, sum, category } = cost;
-				report[category].push({ day, description, sum });
+			// Fill the formattedReport with the aggregated data
+			report.forEach((item) => {
+				formattedReport[item.category] = item.costs;
 			});
-			// Send the structured report as a response
-			res.status(200).json(report);
+			res.status(200).json(formattedReport);
 		} catch (error) {
-			// Handle potential errors
-			res.status(500).json({ message: 'Error generating report', error });
+			console.error('Error generating report:', error);
+			res.status(500).json({
+				message: 'Error generating report',
+				error: error.message,
+			});
 		}
 	},
 
-	//3. GET: NO INPUTS
+	//3. about: GET: NO INPUTS
 	about: async (req, res) => {
 		try {
 			Developer.find().then((developers) => {
