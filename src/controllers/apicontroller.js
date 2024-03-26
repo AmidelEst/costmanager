@@ -47,12 +47,12 @@ module.exports = {
 				category,
 				sum,
 			});
-			console.log(user_id, year, month, day, description, category, sum);
+
 			// Saving the new Cost instance to the database
 			await cost.save();
 			res.status(200).json({
 				message: 'success',
-				id: cost._id,
+				id: cost.id,
 			});
 		} catch (error) {
 			console.error('Error adding cost:', error);
@@ -167,15 +167,15 @@ module.exports = {
 	//-------------added methods--------------------------
 
 	//-- added method 1: add user
+
 	/**
-	/**
- * Adds a new user to the database.
- * This function is designed to handle the POST request to add a new user.
- * It expects an ID, first name, last name, and birthday in the request body.
- * 
- * @param {Object} req The request object, containing the user details in its body.
- * @param {Object} res The response object used to send back the status of the operation.
- */
+	 * Adds a new user to the database.
+	 * This function is designed to handle the POST request to add a new user.
+	 * It expects an ID, first name, last name, and birthday in the request body.
+	 *
+	 * @param {Object} req The request object, containing the user details in its body.
+	 * @param {Object} res The response object used to send back the status of the operation.
+	 */
 	adduser: async (req, res) => {
 		try {
 			// Destructuring required fields from request body
